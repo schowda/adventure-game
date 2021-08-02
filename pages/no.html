@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color: #952f8a;">
+    <head>
+        <title>Adventure Game Map</title>
+        <link rel="stylesheet" href="../css/style.css" />
+    </head>
+
+    
+</center>
+<center>
+    <div class = "flex col">
+        
+    <h3 style="font-size:4vw; color: #ffffff" id="walking"></h3>
+   
+    </div>
+ </center>  
+<div style="background-color: #952f8a; " >
+ 
+    
+ 
+   <a href="map.html">
+ <img
+ src="../pages/walking.gif"
+ width="50%"/>
+   </a>
+
+
+
+
+   <script>
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+ 
+    document.getElementById(
+      "walking"
+    ).innerText = `Click on Me, I will take you to places you can vist in  ${params["s"]} `;
+  </script>
+</body>
+</html>

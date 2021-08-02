@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color: #952f8a;">
+    <head>
+        <title>Adventure Game Map</title>
+        <link rel="stylesheet" href="../css/style.css" />
+    </head>
+
+    
+        <div style="background-color: #952f8a; " class = "flex row">
+            <img
+            src="../pages/money.gif"
+            width="60%"/>
+            
+                <div class = "flex col">
+                <h3  style="font-size:4vw; color: #ffffff" id="money"></h3>
+
+                
+               
+                </div>
+             
+          
+        </div>
+        <center>
+        <div style="background-color: #952f8a;">
+            <button class="button button4" onclick=" location.href = 'https://www.google.com/travel/hotels'" >Click On This</button>
+        </div>
+    </center>
+       
+
+
+       <script>
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        const params = Object.fromEntries(urlSearchParams.entries());
+       
+        document.getElementById(
+          "money"
+        ).innerText = `Let me show you some hotels in   ${params["s"]} with best price.`;
+   
+      </script>
+</body>
+</html>

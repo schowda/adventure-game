@@ -1,0 +1,79 @@
+#container {
+    height: 500px;
+    min-width: 600px;
+    max-width: 1600px;
+    margin: 0 auto; 
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+}
+.center {
+ text-align: center
+}
+h1 {text-align: center;}
+
+
+/* NAV BAR */
+@import url('https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap');
+
+
+*{
+    font-family:  'STIX Two Math', serif;
+    box-sizing: border-box;
+}
+body{
+    background-color: rgb(255, 255, 255);
+}
+.navbar{
+    background-color:#e0296e;
+    /* margin:12px 40px; */
+    display: inline-block;
+    width: 100%;
+    border-bottom: solid 1px rgb(0, 0, 0);
+}
+
+ul{
+    list-style: none;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+}
+
+a{
+    text-decoration: none;
+    color:white;
+    font-size: 25px;
+    margin:12px 14px;
+}
+a:hover{
+    text-decoration:underline;
+    color:#7e99b9;
+    font-size: 28px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+   
+}
+
+header::before{
+   /* background:url("https://source.unsplash.com/1600x900/?learning,books"); */
+   content: "";
+   position:absolute;
+   width:100%;
+   height:100%;
+   z-index:-1;
+   opacity:0.5;
+}
+section{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  color:burlywood;
+  font-size: 30px;
+  padding-top: 30px;
+}
+
+.mastery{
+    font-weight: bolder;
+}

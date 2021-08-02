@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adventure Game Map</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="pictures.html">Pictures</a></li>
+          <li><a href="map.html">Things To Do</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class = "container" style="background-color:#952f8a">
+        <div class = "flex row">
+            <img
+              src="../pages/wavingman.gif"
+              width="50%"
+            />
+            <center>
+            <div class = "flex col">
+            <h1 style="font-size:7vw; color: #ffffff" id="welcome"></h1>
+            <h1 style="font-size:4vw; color: #ffffff" > My name is Polo, I will help you by asking some questions</h1>
+            </div>
+         </center>   
+        </div>
+      <!-- <h1 id="title"></h1> -->
+      <!-- <p style="font-size: 15vw">Welcome to Georgia</p> -->
+    </div>
+    <div >
+       <center>
+        <div style="background-color: #e0296e;">
+            <img
+            src="../pages/wheredoyouwanttogofirst.gif"
+            width="100%"
+          />
+        </div>
+       </center>
+       <center>
+        <div style="background-color: #952f8a; height: 50%; ">
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <button class="button button4" onclick=" touchOnClick('../pages/hotels.html')">Hotel</button> 
+            <button class="button button4" onclick="touchOnClick('../pages/tours.html') ">Tour</button>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+       </center>
+    </div>
+    <!-- <center>
+    <div style="background-color: #952f8a; " class = "flex row">
+        <img
+        src="../pages/money.gif"
+        width="60%"
+        <center>
+            <div class = "flex col">
+            <h3  style="font-size:4vw; color: #ffffff" id="money"></h3>
+            
+           
+            </div>
+         </center>  
+      />
+    </div>
+   </center> -->
+   <!-- <center>
+    <div style="background-color: #e0296e;">
+        <img
+        src="../pages/plan.gif"
+        width="100%"
+      />
+    </div>
+    <div style="background-color: #952f8a; height: 50%; ">
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <button class="button button4">Yes</button> 
+        <button class="button button4">No</button>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+    
+   </center>
+   <div style="background-color: #952f8a; " class = "flex row">
+    
+       
+    
+      <a href="map.html">
+    <img
+    src="../pages/walking.gif"
+    width="100%"/>
+      </a>
+    <center>
+        <div class = "flex col">
+            
+        <h3 style="font-size:4vw; color: #ffffff" id="walking"></h3>
+       
+        </div>
+     </center>  
+  />
+</div> -->
+
+  <script>
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    document.getElementById(
+      "welcome"
+    ).innerText = `Welcome to  ${params["s"]} Airport`;
+    document.getElementById(
+      "money"
+    ).innerText = `Let me show you some hotels in   ${params["s"]} with best price.`;
+    document.getElementById(
+      "walking"
+    ).innerText = `Click on Me, I will take you to places you can vist in  ${params["s"]} `;
+
+
+    function touchOnClick(url) {
+        location.href = `${url}?s=${params["s"]}`;  
+    }
+  </script>
+    
+  </body>
+</html>

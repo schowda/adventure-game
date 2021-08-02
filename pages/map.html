@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Game Map</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /*  <span class="metadata-marker" style="display: none;" data-region_tag="css"></span>       Set the size of the div element that contains the map */
+        #map {
+            height: 600px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+        .text {
+            text-align: center;
+        }
+        .info{
+            font-size: medium;
+        }
+
+    </style>
+    <script>
+        var map;
+        var InforObj = [];
+        var centerCords = {
+            lat: 41.850033,
+            lng: -87.6500523
+        };
+        var markersOnMap = [{
+                placeName: "georgia aquarium atlanta",
+                title:"Georgia Aquarium is a public aquarium in Atlanta, Georgia, United States. Georgia Aquarium is home to hundreds of species and thousands of animals across its seven major galleries, all of which reside in more than 11 million US gallons (42,000 m3) of fresh and saltwater. It was the largest aquarium in the world from its opening in 2005 until 2012 when it became the third-largest aquarium in the world after the Marine Life Park in Singapore and the Chimelong Ocean Kingdom in China; the Georgia Aquarium remains the largest aquarium in the United States and in the Western Hemisphere.",
+                thumbnail: "https://www.georgiaaquarium.org/",
+                address : "225 Baker St NW, Atlanta, GA 30313",
+                LatLng: [{
+                    lat: 33.7575,
+                    lng: -84.3897
+                }]
+            },
+            {
+                placeName: "World of Coca-Cola",
+                title:"Welcome to the World of Coca-Cola in Atlanta! Spend the day interacting with multiple exhibits, learning about the storied history of the iconic beverage brand, and sampling beverages from around the world. By visiting the World of Coca-Cola, you voluntarily assume all risks related to exposure to COVID-19. At this time face masks must be worn by all guests and ambassadors over 2 years of age.",
+                thumbnail:'https://www.worldofcoca-cola.com/?mc_id=SE_NA_ACQ_GOOG_200068&gclid=Cj0KCQjw6ZOIBhDdARIsAMf8YyFRl5LWP7unwMGjTQ_Mgm63UvAiqf8SqTn1GTlTGj64oEEW5BMCElcaAswCEALw_wcB&gclsrc=aw.ds',
+                address:'121 Baker St NW, Atlanta, GA 30313',
+                LatLng: [{
+                    lat: 33.7628,
+                    lng: -84.3928
+                }]
+            },
+            {
+                placeName: "Hmart",
+                title:'Our food is our pride, and through its quality, we will do our absolute best to maintain our continuous movement towards providing our customers with the joy that comes from it," said Il Yeon Kwon, founder and CEO of H Mart. We offer you the best quality produce so you and your family can enjoy the freshest meals, everyday! Easily find your Asian and international groceries as we have the most amazing selection of goods and ingredients from around the globe! We offer you a one-stop shopping experience. Fresh groceries, exquisite restaurants and more! Enjoy shopping at H Mart!',
+                thumbnail:'https://www.yelp.com/biz/h-mart-duluth-duluth',
+                address:"Shopping Center, 2550 Pleasant Hill Road bldg 300, Park Village, Duluth, GA 30096",
+                LatLng: [{
+                    lat: 34.005329,
+                    lng: -84.144180
+                }]
+            },
+            {
+                placeName: "Suwanee City Hall Park",
+                title:"Through the City of Suwanee's bond-funded, award-winning open space initiative (approved by voters in 2001), five new parks were created and the Suwanee Creek Greenway extended. Suwanee is widely recognized throughout the Atlanta region for its leadership in preserving open space and establishing high-quality parks and passive recreation opportunities. Over the past few years, the City's focus has been on enhancing existing parks rather than adding new ones.",
+                thumbnail:'https://www.suwanee.com/services/parks',
+                address:"Town Center Ave, Suwanee, GA 30024",
+                LatLng: [{
+                    lat: 34.051491,
+                    lng: -84.071297
+                }]
+            },
+            {
+                placeName: "Six Flags",
+                title:'If you love roller coasters, you probably should thank Six Flags. Opened in 1967, the park takes its name from the six flags that have flown over some part of Georgia during its long history—Spain, France, Great Britain, the United States, the Confederacy, and the state of Georgia. Angus Wynne had opened Six Flags over Texas in 1961, then bought land in Cobb County west of Atlanta for a second location.',
+                thumbnail:'https://www.sixflags.com/overgeorgia',
+                address:'275 Riverside Parkway, Austell, GA 30168, USA',
+                LatLng: [{
+                    lat: 33.7674749,
+                    lng: -84.5486502
+                }]
+            },
+            {
+                placeName: 'Statue of Liberty & Ellis Island Tour',
+                title:'Round trip ferry ticket for Statue of Liberty and Ellis Island • Access to the new Liberty Island Museum • Access to the Immigration Museum at Ellis Island • Expert English speaking guide • Entry/Admission - Statue of Liberty • Entry/Admission - Ellis Island • Entry/Admission - Ellis Island Immigration Museum • Guaranteed to skip the lines',
+                thumbnail:'https://www.tripadvisor.com/AttractionProductReview-g60763-d11451132-OPEN_Statue_of_Liberty_Ellis_Island_Tour_All_Options-New_York_City_New_York.html',
+                address:'Castle Clinton National Monument, New York, NY 10004, USA',
+                LatLng: [{
+                    lat: 40.689247,
+                    lng: -74.044502
+
+                }]
+            },
+            {
+                placeName: 'Central Park',
+                title:"For more than 150 years, visitors have flocked to Central Park's 843 green acres in the heart of Manhattan. Since 1980, the Park has been managed by the Central Park Conservancy, in partnership with the public. Central Park is open 6 am to 1 am daily. Visit the official website of Central Park to learn more about Park happenings and activities and to learn how you to help Central Park!",
+                thumbnail:'https://www.tripadvisor.com/Attraction_Review-g60763-d105127-Reviews-Central_Park-New_York_City_New_York.html',
+                address:'59th to 110th Street Manhattan Borough, from Central Park West to 5th Avenue, New York City, NY 10022',
+                LatLng: [{
+                    lat: 40.785091,
+                    lng: -73.968285
+
+                }]
+            },
+            {
+                placeName: 'Manhattan Skyline',
+                title:"This is the iconic New York that so many visitors imagine before they visit - spectacular skyscrapers like the Chrysler Building and Empire State Building, iconic public buildings like Grand Central Terminal and the New York Public Library, and the non-stop hustle and bustle of the city streets. Fifth Avenue is a shopper's paradise where you can find every kind of store imaginable, with fashion brands ranging from the affordable to the ultra-fancy. Visit Rockefeller Center to experience towering Art Deco grandeur, and foodies will love the busy restaurants that stay open late in Koreatown. After dark, Midtown calms down a bit, but at any time of day or night it still feels 100% New York.",
+                thumbnail:'https://www.tripadvisor.com/Attraction_Review-g60763-d267031-Reviews-Manhattan_Skyline-New_York_City_New_York.html',
+                address:'103 W 55th St, New York, NY 10019',
+                LatLng: [{
+                    lat: 40.754932,
+                    lng: -73.984016
+                }]
+            },
+            {
+                placeName: 'One World Observatory',
+                title:'There are a million things to experience in New York City, but there’s only one way to see them all at once. You can start by hopping a Sky Pod to the top of the tallest building in the Western Hemisphere. There, 102 stories up, find yourself face-to-face with New York’s iconic skyline. Maybe you’ve seen views of the city before, but never quite like this. Walk the three sprawling levels of the Observatory and discover surprises along the way. Drop into the café and grab a bite to eat. Step onto the Sky Portal and stroll high above the crowded streets. Take an interactive guided tour of the city with the help of our Skyline Concierges, available to answer any questions you might have about New York’s long and storied history. And don’t leave without stopping by the One Mix bar for a glass of celebratory prosecco and one last look toward the horizon. See for yourself why One World Observatory is truly An Experience Above.',
+                thumbnail:'https://www.tripadvisor.com/Attraction_Review-g60763-d8072300-Reviews-One_World_Observatory-New_York_City_New_York.html',
+                address:"285 Fulton St One World Trade Center, New York City, NY 10007-0089",
+                LatLng: [{
+                    lat: 40.712742,
+                    lng: -74.013382
+
+                }]
+            },
+            {
+                placeName: 'The Oculus',
+                title:'Round trip ferry ticket for Statue of Liberty and Ellis Island • Access to the new Liberty Island Museum • Access to the Immigration Museum at Ellis Island • Expert English speaking guide • Entry/Admission - Statue of Liberty • Entry/Admission - Ellis Island • Entry/Admission - Ellis Island Immigration Museum • Guaranteed to skip the lines',
+                thumbnail:'https://www.tripadvisor.com/Attraction_Review-g60763-d10340693-Reviews-The_Oculus-New_York_City_New_York.html',
+                address:'33-69 Vesey St World Trade Center, New York City, NY 10003',
+                LatLng: [{
+                    lat: 41.5455189385883,
+                    lng: -73.8739518307288
+
+                }]
+            },
+            {
+                placeName: 'De Young Museum',
+                title:"We are motivated to forge ahead knowing that our community needs the solace and inspiration of art more than ever. We will continue to illuminate the past, speak of the present, and shape the future.",
+                thumbnail:"https://deyoung.famsf.org/",
+                address:'50 Hagiwara Tea Garden Dr, San Francisco, CA 94118',
+                LatLng:[{
+                    lat: 37.771424633916375, 
+                    lng: -122.46846813309111
+                }]
+            },
+            {
+                placeName:'SeaWorld San Diego',
+                title:'For more than five decades, the SeaWorld Rescue team has provided a second chance at life to more than 38,000 animals, always with the goal of rehabilitating them and returning them to the wild.',
+                thumbnail:'https://seaworld.com/san-diego',
+                address:' 500 Sea World Dr., San Diego, CA 92109',
+                LatLng:[{
+                    lat: 32.790765789047136, 
+                    lng: -117.22574425899799
+                }]
+            },
+            {
+                placeName:'San Diego Zoo Safari Park',
+                title:'San Diego Zoo Wildlife Alliance is an international, nonprofit conservation organization with two front doors. We integrate wildlife health and care, science, and education to develop sustainable conservation solutions. Conservation is at the heart of everything we do. And it starts with that connection we make with people and wildlife every day. Because when wildlife thrives, all life thrives.',
+                thumbnail:'http://www.sdzsafaripark.org/',
+                address:'15500 San Pasqual Valley Rd, Escondido, CA 92027',
+                LatLng:[{
+                    lat: 33.123674425785914, 
+                    lng: -116.98411759255787 
+                }]
+            },
+            {
+                placeName:'Griffith Observatory',
+                title:'Located on the south slope of Mount Hollywood in Griffith Park, the Observatory is literally in the center of metropolitan Los Angeles. While public transportation is the easiest way to visit, you may also walk, bike, drive, or take a shared-ride service up to the Observatory. There’s paid parking near the Observatory and free parking downhill. Be sure to plan your visit in advance, because roads and parking get busy.',
+                thumbnail:'http://www.griffithobservatory.org/',
+                address:'2800 E Observatory Rd, Los Angeles, CA 90027',
+                LatLng:[{
+                    lat: 34.127920141464564, 
+                    lng:-118.30054759896663
+                }]
+            },
+
+            {
+                placeName:'The Museum of Flight',
+                title:'The Museum of Flight is the largest independent, non-profit air and space museum in the world!',
+                thumbnail:'http://www.museumofflight.org/',
+                address:'9404 E Marginal Way S, Seattle, WA 98108',
+                LatLng:[{
+                    lat: 47.54808044406384, 
+                    lng: -122.31883619853951
+                }]
+            },
+            
+            {
+                placeName:'Space Needle',
+                title:'For the first time in half a century, the Space Needle has been totally transformed to take your visit to the next level — and beyond.',
+                thumbnail:'https://www.spaceneedle.com/',
+                address:'400 Broad St, Seattle, WA 98109',
+                LatLng:[{
+                    lat: 47.64597172973431,
+                    lng: -122.35284812287954
+                }]
+            },
+            {
+                placeName:'Dallas Zoo',
+                title:"The DMA is one of the largest art museums in America, located in the nation's largest arts district in downtown Dallas.",
+                thumbnail:'https://dma.org/',
+                address:'650 S R L Thornton Fwy, Dallas, TX 75203',
+                LatLng:[{
+                    lat: 32.74282867265669, 
+                    lng: -96.81681715950316
+                }]
+            },
+            {
+                placeName:'African American Museum of Dallas',
+                title:"The African American Museum is the only one of its kind in the Southwestern Region devoted to the preservation and display of African American artistic, cultural and historical materials. It has one of the largest African American Folk Art collections in the US.",
+                thumbnail:'https://aamdallas.org/',
+                address:'3536 Grand Ave, Dallas, TX 75210',
+                LatLng:[{
+                   lat: 32.78302236729594, 
+                   lng: -96.76476750771133
+                }]
+            }
+        ];
+
+        window.onload = function () {
+            initMap();
+        };
+
+        function addMarkerInfo() {
+            for (var i = 0; i < markersOnMap.length; i++) {
+                var contentString = '<div id="content"><h1>' + markersOnMap[i].placeName +
+                    '<p class="info">'+markersOnMap[i].title+"<br>"+ '<p class="address">Address</p>'+markersOnMap[i].address+"<p>"+"<a href>"+ markersOnMap[i].thumbnail+"</href>";
+
+                const marker = new google.maps.Marker({
+                    position: markersOnMap[i].LatLng[0],
+                    map: map
+                });
+
+                const infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 450
+                });
+
+                marker.addListener('click', function () {
+                    closeOtherInfo();
+                    map.setZoom(8);
+                    infowindow.open(marker.get('map'), marker);
+                    InforObj[0] = infowindow;
+                });
+                // marker.addListener('mouseover', function () {
+                //     closeOtherInfo();
+                //     infowindow.open(marker.get('map'), marker);
+                //     InforObj[0] = infowindow;
+                // });
+                // marker.addListener('mouseout', function () {
+                //     closeOtherInfo();
+                //     infowindow.close();
+                //     InforObj[0] = infowindow;
+                // });
+            }
+        }
+
+        function closeOtherInfo() {
+            if (InforObj.length > 0) {
+                /* detach the info-window from the marker ... undocumented in the API docs */
+                InforObj[0].set("marker", null);
+                /* and close it */
+                InforObj[0].close();
+                /* blank the array */
+                InforObj.length = 0;
+            }
+        }
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: centerCords
+            });
+            addMarkerInfo();
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pictures.html">Pictures</a></li>
+                <li><a href="map.html">Things To Do</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h3 class="text">See Our Recommendation for Your Trip</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwn3Bas89OHVWYpUPrnBW-kQDjDyGCqgk"></script>
+
+</body>
+
+</html>
